@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'validation_examples'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+            
+			<label index="tx_validationexamples_domain_model_addressdata">Addressdata</label>
+			<label index="tx_validationexamples_domain_model_addressdata.firstname">Firstname</label>
+			<label index="tx_validationexamples_domain_model_addressdata.lastname">Lastname</label>
+			<label index="tx_validationexamples_domain_model_addressdata.street">Street</label>
+			<label index="tx_validationexamples_domain_model_addressdata.streetnr">Streetnr</label>
+			<label index="tx_validationexamples_domain_model_addressdata.zip">Zip</label>
+			<label index="tx_validationexamples_domain_model_addressdata.city">City</label>
+
+		</languageKey>
+	</data>
+</T3locallang>

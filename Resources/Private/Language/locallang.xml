@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the Validation Examples extension in the FRONTEND</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_validationexamples_domain_model_addressdata">Addressdata</label>
+			<label index="tx_validationexamples_domain_model_addressdata.firstname">Firstname</label>
+			<label index="tx_validationexamples_domain_model_addressdata.lastname">Lastname</label>
+			<label index="tx_validationexamples_domain_model_addressdata.street">Street</label>
+			<label index="tx_validationexamples_domain_model_addressdata.streetnr">Streetnumber</label>
+			<label index="tx_validationexamples_domain_model_addressdata.zip">ZIP</label>
+			<label index="tx_validationexamples_domain_model_addressdata.city">city</label>
+		</languageKey>
+	</data>
+</T3locallang>

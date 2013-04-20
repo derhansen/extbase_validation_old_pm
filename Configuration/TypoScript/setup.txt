@@ -1,0 +1,34 @@
+plugin.tx_validationexamples {
+	view {
+		templateRootPath = {$plugin.tx_validationexamples.view.templateRootPath}
+		partialRootPath = {$plugin.tx_validationexamples.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_validationexamples.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_validationexamples.persistence.storagePid}
+	}
+	features {
+		# uncomment the following line to enable the new Property Mapper.
+		# rewrittenPropertyMapper = 1
+	}
+}
+
+plugin.tx_validationexamples._CSS_DEFAULT_STYLE (
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.tx-validation-examples table {
+		border-collapse:separate;
+		border-spacing:10px;
+	}
+
+	.tx-validation-examples table th {
+		font-weight:bold;
+	}
+
+	.tx-validation-examples table td {
+		vertical-align:top;
+	}
+)
