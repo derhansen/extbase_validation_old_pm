@@ -12,7 +12,7 @@
 			<label index="tx_validationexamples_domain_model_addressdata.street">Street</label>
 			<label index="tx_validationexamples_domain_model_addressdata.streetnr">Streetnumber</label>
 			<label index="tx_validationexamples_domain_model_addressdata.zip">ZIP</label>
-			<label index="tx_validationexamples_domain_model_addressdata.city">city</label>
+			<label index="tx_validationexamples_domain_model_addressdata.city">City</label>
 		</languageKey>
 	</data>
 </T3locallang>

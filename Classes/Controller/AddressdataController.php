@@ -65,6 +65,7 @@ class Tx_ValidationExamples_Controller_AddressdataController extends Tx_Extbase_
 	 * Create action
 	 *
 	 * @param Tx_ValidationExamples_Domain_Model_Addressdata $newAddressdata
+	 * @validate $newAddressdata Tx_ValidationExamples_Validation_Validator_AddressdataValidator
 	 * @return void
 	 */
 	public function createAction(Tx_ValidationExamples_Domain_Model_Addressdata $newAddressdata) {
