@@ -21,13 +21,11 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
 	'Pi2',
 	array(
-		'Addressdata' => 'new, create',
-		
+		'MultipleSteps' => 'step1, step2, step3, step1redirect, step2redirect, step3redirect, create',
 	),
 	// non-cacheable actions
 	array(
-		'Addressdata' => 'create',
-		
+		'MultipleSteps' => 'step1, step2, step3, step1redirect, step2redirect, step3redirect, create',
 	)
 );
 

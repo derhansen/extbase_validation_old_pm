@@ -49,5 +49,25 @@ class Tx_ValidationExamples_Service_ExternalApiService implements t3lib_Singleto
 		return $errors;
 	}
 
+	/**
+	 * Simulates validation of addressdata entered in the multiple steps form.
+	 * Returns an array of validation errors for each step of the multiple steps form
+	 *
+	 * @param Tx_ValidationExamples_Domain_Model_Addressdata $addressdata
+	 * @return array
+	 */
+	public function validateMultipleSteps(Tx_ValidationExamples_Domain_Model_Addressdata $addressdata) {
+		$errors = array();
+		if ($addressdata->getStreet() == '' && $addressdata->getCity() != 'Hamburg') {
+			$errors['step3']['zip'] = 'ZIP Code and city do not match';
+			$errors['step3']['city'] = 'ZIP Code and city do not match';
+		}
+		if ($addressdata->getZip() == 20095 && $addressdata->getCity() != 'Hamburg') {
+			$errors['step3']['zip'] = 'ZIP Code and city do not match';
+			$errors['step3']['city'] = 'ZIP Code and city do not match';
+		}
+		return $errors;
+	}
+
 }
 ?>
