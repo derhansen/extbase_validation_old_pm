@@ -51,6 +51,23 @@ class Tx_ValidationExamples_Controller_MultipleStepsController extends Tx_Extbas
 	}
 
 	/**
+	 * API Service
+	 *
+	 * @var Tx_ValidationExamples_Service_ExternalApiService
+	 */
+	protected $apiService;
+
+	/**
+	 * Injects the API Service
+	 *
+	 * @param Tx_ValidationExamples_Service_ExternalApiService $apiService
+	 * @return void
+	 */
+	public function injectApiService(Tx_ValidationExamples_Service_ExternalApiService $apiService) {
+		$this->apiService = $apiService;
+	}
+
+	/**
 	 * Step1
 	 *
 	 * @param Tx_ValidationExamples_Domain_Model_Step1Data $step1data
@@ -89,6 +106,9 @@ class Tx_ValidationExamples_Controller_MultipleStepsController extends Tx_Extbas
 			$step2data = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'step2data'));
 		}
 
+		/* Set external validations errors if available */
+		$this->setApiValidationErrors('step2');
+
 		$this->view->assign('step2data', $step2data);
 	}
 
@@ -117,6 +137,9 @@ class Tx_ValidationExamples_Controller_MultipleStepsController extends Tx_Extbas
 			$step3data = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'step3data'));
 		}
 
+		/* Set external validations errors if available */
+		$this->setApiValidationErrors('step3');
+
 		$this->view->assign('step3data', $step3data);
 	}
 
@@ -139,6 +162,23 @@ class Tx_ValidationExamples_Controller_MultipleStepsController extends Tx_Extbas
 	 */
 	public function createAction() {
 		$addressdata = $this->getAddressdataFromSession();
+
+		/* get validation results from API */
+		$apiresults = $this->apiService->validateMultipleSteps($addressdata);
+		if (count($apiresults) > 0) {
+			/* Save results to a session variable */
+			$GLOBALS['TSFE']->fe_user->setKey('ses', 'apiresults', $apiresults);
+			$GLOBALS['TSFE']->fe_user->storeSessionData();
+
+			/* Redirect to step with validation errors */
+			if (array_key_exists('step2', $apiresults)) {
+				$this->redirect('step2');
+			}
+			if (array_key_exists('step3', $apiresults)) {
+				$this->redirect('step3');
+			}
+		}
+
 		$this->addressdataRepository->add($addressdata);
 		$this->cleanUpSessionData();
 
@@ -181,7 +221,35 @@ class Tx_ValidationExamples_Controller_MultipleStepsController extends Tx_Extbas
 		$GLOBALS['TSFE']->fe_user->setKey('ses', 'step1data', '');
 		$GLOBALS['TSFE']->fe_user->setKey('ses', 'step2data', '');
 		$GLOBALS['TSFE']->fe_user->setKey('ses', 'step3data', '');
+		$GLOBALS['TSFE']->fe_user->setKey('ses', 'apiresults', '');
 		$GLOBALS['TSFE']->fe_user->storeSessionData();
+	}
+
+	/**
+	 * Sets validation errors for fields in the given step
+	 *
+	 * @param string $step The step
+	 * @return void
+	 */
+	protected function setApiValidationErrors($step) {
+		$apiresults = $GLOBALS['TSFE']->fe_user->getKey('ses', 'apiresults');
+		if (array_key_exists($step, $apiresults)) {
+			/* Set Form Errors manually */
+			$errors = new Tx_Extbase_MVC_Controller_ArgumentError($step . 'data');
+
+			$propertyErrors = array();
+
+			/* Add validation errors */
+			foreach ($apiresults[$step] as $key => $value) {
+				$propertyErrors[$key] = t3lib_div::makeInstance('Tx_Extbase_Validation_PropertyError', $key);
+				$message = $apiresults[$step][$key];
+				$propertyError = t3lib_div::makeInstance('Tx_Extbase_Validation_Error', $message, time());
+				$propertyErrors[$key]->addErrors(array($propertyError));
+			}
+
+			$errors->addErrors($propertyErrors);
+			$this->controllerContext->getRequest()->setErrors(array($errors));
+		}
 	}
 }
 ?>

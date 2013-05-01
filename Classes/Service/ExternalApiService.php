@@ -58,9 +58,8 @@ class Tx_ValidationExamples_Service_ExternalApiService implements t3lib_Singleto
 	 */
 	public function validateMultipleSteps(Tx_ValidationExamples_Domain_Model_Addressdata $addressdata) {
 		$errors = array();
-		if ($addressdata->getStreet() == '' && $addressdata->getCity() != 'Hamburg') {
-			$errors['step3']['zip'] = 'ZIP Code and city do not match';
-			$errors['step3']['city'] = 'ZIP Code and city do not match';
+		if ($addressdata->getStreet() == 'Elbstraße' && $addressdata->getStreetnr() > 145) {
+			$errors['step2']['streetnr'] = 'Streetnr not valid for this street';
 		}
 		if ($addressdata->getZip() == 20095 && $addressdata->getCity() != 'Hamburg') {
 			$errors['step3']['zip'] = 'ZIP Code and city do not match';
