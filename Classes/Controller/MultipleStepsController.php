@@ -75,7 +75,7 @@ class Tx_ValidationExamples_Controller_MultipleStepsController extends Tx_Extbas
 	 */
 	public function step1Action(Tx_ValidationExamples_Domain_Model_Step1Data $step1data = NULL) {
 		/* Check if step1data is available in session */
-		if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'step1data')) {
+		if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'step1data') && $step1data == NULL) {
 			$step1data = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'step1data'));
 		}
 
@@ -102,7 +102,7 @@ class Tx_ValidationExamples_Controller_MultipleStepsController extends Tx_Extbas
 	 */
 	public function step2Action(Tx_ValidationExamples_Domain_Model_Step2Data $step2data = NULL) {
 		/* Check if step2data is available in session */
-		if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'step2data')) {
+		if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'step2data') && $step2data == NULL) {
 			$step2data = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'step2data'));
 		}
 
@@ -133,7 +133,7 @@ class Tx_ValidationExamples_Controller_MultipleStepsController extends Tx_Extbas
 	 */
 	public function step3Action(Tx_ValidationExamples_Domain_Model_Step3Data $step3data = NULL) {
 		/* Check if step3data is available in session */
-		if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'step3data')) {
+		if ($GLOBALS['TSFE']->fe_user->getKey('ses', 'step3data') && $step3data == NULL) {
 			$step3data = unserialize($GLOBALS['TSFE']->fe_user->getKey('ses', 'step3data'));
 		}
 
@@ -235,7 +235,12 @@ class Tx_ValidationExamples_Controller_MultipleStepsController extends Tx_Extbas
 		$apiresults = $GLOBALS['TSFE']->fe_user->getKey('ses', 'apiresults');
 		if (array_key_exists($step, $apiresults)) {
 			/* Set Form Errors manually */
-			$errors = new Tx_Extbase_MVC_Controller_ArgumentError($step . 'data');
+			$origErrors = $this->controllerContext->getRequest()->getErrors();
+			if ($origErrors) {
+				$errors = $origErrors[$step . 'data'];
+			} else {
+				$errors = new Tx_Extbase_MVC_Controller_ArgumentError($step . 'data');
+			}
 
 			$propertyErrors = array();
 
@@ -246,8 +251,8 @@ class Tx_ValidationExamples_Controller_MultipleStepsController extends Tx_Extbas
 				$propertyError = t3lib_div::makeInstance('Tx_Extbase_Validation_Error', $message, time());
 				$propertyErrors[$key]->addErrors(array($propertyError));
 			}
-
 			$errors->addErrors($propertyErrors);
+
 			$this->controllerContext->getRequest()->setErrors(array($errors));
 		}
 	}
