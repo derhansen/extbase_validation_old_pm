@@ -78,14 +78,14 @@ class Tx_ValidationExamples_Validation_Validator_AddressdataValidator extends Tx
 		$apiValidationResult = $this->apiService->validateAddressData($value);
 		$success = TRUE;
 		if ($apiValidationResult['zip']) {
-			$error = $this->objectManager->create('Tx_Extbase_Validation_Error', $apiValidationResult['zip'], time());
-			$this->errors['zip'] = $this->objectManager->create('Tx_Extbase_Validation_PropertyError', 'zip');
+			$error = $this->objectManager->get('Tx_Extbase_Validation_Error', $apiValidationResult['zip'], time());
+			$this->errors['zip'] = $this->objectManager->get('Tx_Extbase_Validation_PropertyError', 'zip');
 			$this->errors['zip']->addErrors(array($error));
 			$success = FALSE;
 		}
 		if ($apiValidationResult['city']) {
-			$error = $this->objectManager->create('Tx_Extbase_Validation_Error', $apiValidationResult['city'], time());
-			$this->errors['city'] = $this->objectManager->create('Tx_Extbase_Validation_PropertyError', 'city');
+			$error = $this->objectManager->get('Tx_Extbase_Validation_Error', $apiValidationResult['city'], time());
+			$this->errors['city'] = $this->objectManager->get('Tx_Extbase_Validation_PropertyError', 'city');
 			$this->errors['city']->addErrors(array($error));
 			$success = FALSE;
 		}
