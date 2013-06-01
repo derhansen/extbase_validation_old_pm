@@ -51,6 +51,23 @@ class Tx_ValidationExamples_Validation_Validator_AddressdataValidator extends Tx
 	}
 
 	/**
+	 * Object Manager
+	 *
+	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 */
+	protected $objectManager;
+
+	/**
+	 * Injects the object manager
+	 *
+	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @return void
+	 */
+	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+		$this->objectManager = $objectManager;
+	}
+
+	/**
 	 * Validates the given value
 	 *
 	 * @param mixed $value
@@ -61,14 +78,14 @@ class Tx_ValidationExamples_Validation_Validator_AddressdataValidator extends Tx
 		$apiValidationResult = $this->apiService->validateAddressData($value);
 		$success = TRUE;
 		if ($apiValidationResult['zip']) {
-			$error = t3lib_div::makeInstance('Tx_Extbase_Validation_Error', $apiValidationResult['zip'], time());
-			$this->errors['zip'] = t3lib_div::makeInstance('Tx_Extbase_Validation_PropertyError', 'zip');
+			$error = $this->objectManager->create('Tx_Extbase_Validation_Error', $apiValidationResult['zip'], time());
+			$this->errors['zip'] = $this->objectManager->create('Tx_Extbase_Validation_PropertyError', 'zip');
 			$this->errors['zip']->addErrors(array($error));
 			$success = FALSE;
 		}
 		if ($apiValidationResult['city']) {
-			$error = t3lib_div::makeInstance('Tx_Extbase_Validation_Error', $apiValidationResult['city'], time());
-			$this->errors['city'] = t3lib_div::makeInstance('Tx_Extbase_Validation_PropertyError', 'city');
+			$error = $this->objectManager->create('Tx_Extbase_Validation_Error', $apiValidationResult['city'], time());
+			$this->errors['city'] = $this->objectManager->create('Tx_Extbase_Validation_PropertyError', 'city');
 			$this->errors['city']->addErrors(array($error));
 			$success = FALSE;
 		}

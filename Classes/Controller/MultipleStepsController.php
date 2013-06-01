@@ -246,9 +246,9 @@ class Tx_ValidationExamples_Controller_MultipleStepsController extends Tx_Extbas
 
 			/* Add validation errors */
 			foreach ($apiresults[$step] as $key => $value) {
-				$propertyErrors[$key] = t3lib_div::makeInstance('Tx_Extbase_Validation_PropertyError', $key);
+				$propertyErrors[$key] = $this->objectManager->create('Tx_Extbase_Validation_PropertyError', $key);
 				$message = $apiresults[$step][$key];
-				$propertyError = t3lib_div::makeInstance('Tx_Extbase_Validation_Error', $message, time());
+				$propertyError = $this->objectManager->create('Tx_Extbase_Validation_Error', $message, time());
 				$propertyErrors[$key]->addErrors(array($propertyError));
 			}
 			$errors->addErrors($propertyErrors);
